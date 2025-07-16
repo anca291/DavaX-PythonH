@@ -1,0 +1,26 @@
+Enunt
+
+Implement a microservice that exposes an API to solve different mathematical operations:
+
+- the pow function
+- the n-th fibbonaci number
+- the factorial of the number
+
+Use a database to persist all the requests to the API. Expose the service as an API (not SOAP). Design the service as production ready service.
+
+Nice to haves: containerization, monitoring, caching, authorization, logging via a messaging/streaming framework.
+
+All implementation and design is up to you, following the below restirctions:
+- use a micro framework (any Flask-like will do, sync or async is up to you)
+- follow micro services development best practices (MVC/MVCS patterns)
+- use any API standard except SOAP
+- cosnsider an implementation that supports extensibility
+- as the database layer, use any SQL or NoSQL solution (for simplicity, SQLite will do)
+
+You don't have to implement everything in this document as long as you provide some working functionality. For evaluation purposes, either share a public repository with the code or a zip archive at least 1 day before your face to face technical interview.
+
+More info
+hello, aveti mai jos idea de tema (multe lucruri vor fi greu de facut fara docker, dar puteti sa simplificati treaba) - inlocuiti bazele de date cu SqLite sau ceva in fisiere sau chiar ceva in memory facut de voi (dictionary based caching).
+Daca nu vreti sa va murdariti pe miaini cu web services, puteti sa faceti pur si simplu un CLI (command line interface) dar e musai sa folositi "click" pentru asta (argument parsing made easy). Ca si optiune, puteti sa rezolvati problema si avand workeri async/multithreading care fac partea de calcul (si comunica prin multithreading sau async queues). Important este sa produceti ceva functional (nu performant neaparat) si codul sa fie scris lizibil si lintat cu flake8. Pentru serializare/deserializare e mandatory sa folositi Pydantic.
+
+Tema trebuie insotita si de un readme care as descrie solutia in 0.5-1 pagini, indiferent ce alegeti sa implementati.
