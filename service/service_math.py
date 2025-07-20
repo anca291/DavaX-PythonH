@@ -1,10 +1,13 @@
+from functools import lru_cache
+
 from fastapi import HTTPException
 
 
+@lru_cache(maxsize=1024)
 def fibonacci(n):
     a = 0
     b = 1
-
+    #print(f"Calculating fibonacci({n})")
     # Check if n is less than 0
     if n < 0:
         raise HTTPException(status_code=400, detail="Incorrect input")
