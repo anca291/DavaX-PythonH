@@ -39,3 +39,10 @@ intrebari:
 
 
 --producer-consmer: prod cteste, pune pe coada, consumer pun rasp/scriem in fisier
+
+21.07
+- functiile de pow si factorial (implementarea logica)  -- Delia
+- grafana/prometheus -- sa vedem daca putem loga datele in baza de date (cat a durat, respone) + update pentru noile endpointuri
+    (in loc de math avem acum factorial, pow, fibonacci)  -- Delia + Anca
+- workers in fastapi  -Anca
+- read me-ul -- tbd
