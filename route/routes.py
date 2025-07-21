@@ -1,5 +1,4 @@
 import asyncio
-import datetime
 
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
@@ -14,7 +13,7 @@ router = APIRouter()
 @router.post("/fibonacci", response_model=int)
 async def calculate_fibonacci(math_request: MathRequest):
     nth_number = math_request.number
-    asyncio.create_task( log_math_operation("fibonacci", dict(math_request)))
+    asyncio.create_task(log_math_operation("fibonacci", dict(math_request)))
     return fibonacci(nth_number)
 
 
@@ -26,7 +25,7 @@ def calculate_pow(math_request: MathRequest):
 
 
 @router.post("/factorial", response_model=int)
-def calculate_facturial(math_request: MathRequest):
+def calculate_factorial(math_request: MathRequest):
     factorial_number = math_request.number
     return factorial(factorial_number)
 
@@ -37,7 +36,7 @@ def get_math_history(limit: int = 10):
 
     for rec in records:
         rec["_id"] = str(rec["_id"])
-       # if isinstance(rec["timestamp"], datetime):
+        # if isinstance(rec["timestamp"], datetime):
         rec["timestamp"] = rec["timestamp"].isoformat()
 
     return JSONResponse(content=records)
