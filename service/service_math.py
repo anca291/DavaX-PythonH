@@ -27,9 +27,19 @@ def fibonacci(n):
         return b
 
 
-def pow_function(number: int, exponent: int):
-    raise HTTPException(status_code=400, detail="Incorrect input")
+@lru_cache(maxsize=1024)
+def pow_function(base: int, exponent: int):
+    try:
+        return base ** exponent
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid input: {e}")
 
 
-def factorial(factorial: int):
-    raise HTTPException(status_code=400, detail="Incorrect input")
+@lru_cache(maxsize=1024)
+def factorial(n: int):
+    if n < 0:
+        raise HTTPException(status_code=400, detail="Factorial is not defined for negative numbers")
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result

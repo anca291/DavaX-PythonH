@@ -39,10 +39,10 @@
     },
     {
       "type": "stat",
-      "title": "Total POST /math Calls",
+      "title": "Total POST Calls",
       "targets": [
         {
-          "expr": "sum(http_requests_total{method=\"POST\", path=\"/fibonacci\"})",
+          "expr": "sum(http_requests_total{method=\"POST\"})",
           "refId": "D"
         }
       ],
