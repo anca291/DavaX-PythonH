@@ -18,16 +18,17 @@ async def calculate_fibonacci(math_request: MathRequest):
 
 
 @router.post("/pow", response_model=int)
-def calculate_pow(math_request: MathRequest):
-    number = math_request.number
-    exponent = math_request.exponent
-    return pow_function(number, exponent)
+async def calculate_pow(math_request: MathRequest):
+    if math_request.exponent is None:
+        return JSONResponse(status_code=400, content={"error": "Exponent is required for pow"})
+    asyncio.create_task(log_math_operation("pow", dict(math_request)))
+    return pow_function(math_request.number, math_request.exponent)
 
 
 @router.post("/factorial", response_model=int)
-def calculate_factorial(math_request: MathRequest):
-    factorial_number = math_request.number
-    return factorial(factorial_number)
+async def calculate_factorial(math_request: MathRequest):
+    asyncio.create_task(log_math_operation("factorial", dict(math_request)))
+    return factorial(math_request.number)
 
 
 @router.get("/math/history")
