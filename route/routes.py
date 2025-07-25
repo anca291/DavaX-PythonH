@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
 
-from models import MathRequest
+from model.math_request import MathRequest
 from service.service_audit import log_math_operation, get_recent_requests
 from service.service_math import fibonacci, pow_function, factorial
 

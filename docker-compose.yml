@@ -7,26 +7,35 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9091:9090"
+      - "9090:9090"
     networks:
       - app-network
 
   grafana:
     image: grafana/grafana
     ports:
-      - "3001:3000"
+      - "3000:3000"
+    networks:
+      - app-network
 
   mongo:
     image: mongo
-    container_name: mongo
+    container_name: mongodb
     restart: always
     ports:
-      - "27018:27017"
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
     networks:
       - app-network
+#    volumes:
+#      - mongo-data:/data/db
+#    healthcheck:
+#      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
   api:
     build: .
@@ -43,3 +52,5 @@ services:
 networks:
   app-network:
     driver: bridge
+volumes:
+  mongo-data:
