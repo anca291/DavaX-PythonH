@@ -1,0 +1,68 @@
+# Math API Service
+
+A FastAPI-based microservice for mathematical operations with audit logging to MongoDB. Includes monitoring with Prometheus and Grafana.
+
+## Features
+
+- Calculate Fibonacci, power, and factorial
+- Log requests to MongoDB
+- Retrieve recent request history
+- Monitoring via Prometheus and Grafana
+
+## Requirements
+
+- Python 3.10+
+- Docker & Docker Compose
+
+## Setup
+
+### Local Development
+
+1. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. Set up `.env`:
+    ```
+    MONGO_URI=mongodb://admin:admin123@localhost:27017/
+    ```
+3. Run MongoDB locally or use Docker.
+
+4. Start the FastAPI app:
+    ```bash
+    uvicorn main:app --reload
+    ```
+
+### Docker Compose
+
+1. Build and start all services:
+    ```bash
+    docker-compose up --build
+    ```
+
+2. Access services:
+    - API: [http://localhost:8000](http://localhost:8000)
+    - Prometheus: [http://localhost:9090](http://localhost:9090)
+    - Grafana: [http://localhost:3000](http://localhost:3000)
+    - MongoDB: `localhost:27017`
+
+## API Endpoints
+
+- `POST /fibonacci`
+  **Body:** `{ "number": int }`
+  **Response:** Fibonacci result
+
+- `POST /pow`
+  **Body:** `{ "number": int, "exponent": int }`
+  **Response:** Power result
+
+- `POST /factorial`
+  **Body:** `{ "number": int }`
+  **Response:** Factorial result
+
+- `GET /math/history?limit=10`
+  **Response:** Recent request history
+
+## Monitoring
+- Prometheus and Grafana are pre-configured via Docker Compose.
+
