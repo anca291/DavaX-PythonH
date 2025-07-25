@@ -63,6 +63,8 @@ A FastAPI-based microservice for mathematical operations with audit logging to M
 - `GET /math/history?limit=10`
   **Response:** Recent request history
 
+> **Note:** For testing the `/fibonacci` and `/factorial` endpoints, you only need to provide the `number` value. The `exponent` field is only required for the `/pow` endpoint.
+
 ## Monitoring
 - Prometheus and Grafana are pre-configured via Docker Compose.
 
