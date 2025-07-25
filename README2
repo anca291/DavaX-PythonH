@@ -1,0 +1,81 @@
+# Math API Microservice
+
+This project implements a production-ready microservice for mathematical operations using FastAPI, with request logging to MongoDB and monitoring via Prometheus and Grafana.
+
+## Solution Approach
+
+- **Framework:** FastAPI is used for building a RESTful API, following microservice best practices and the MVC pattern.
+- **Endpoints:** The service exposes endpoints for calculating Fibonacci numbers, powers, and factorials.
+- **Persistence:** All API requests are logged to a MongoDB database for audit and history.
+- **Monitoring:** Prometheus and Grafana are integrated for metrics and visualization.
+- **Containerization:** Docker Compose orchestrates all services for easy deployment.
+- **Extensibility:** The codebase is modular, allowing new mathematical operations to be added easily.
+- **Validation:** Pydantic models are used for request/response validation and serialization.
+
+## Features
+
+- Calculate Fibonacci, power, and factorial
+- Log all requests to MongoDB
+- Retrieve recent request history
+- Monitoring with Prometheus and Grafana
+
+## Requirements
+
+- Python 3.10+
+- Docker & Docker Compose
+
+## Setup
+
+### Local Development
+
+1. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. Set up `.env`:
+    ```
+    MONGO_URI=mongodb://admin:admin123@localhost:27017/
+    ```
+3. Run MongoDB locally or use Docker.
+
+4. Start the FastAPI app:
+    ```bash
+    uvicorn main:app --reload
+    ```
+
+### Docker Compose
+
+1. Build and start all services:
+    ```bash
+    docker-compose up --build
+    ```
+
+2. Access services:
+    - API: [http://localhost:8000](http://localhost:8000)
+    - Prometheus: [http://localhost:9090](http://localhost:9090)
+    - Grafana: [http://localhost:3000](http://localhost:3000)
+    - MongoDB: `localhost:27017`
+
+## API Endpoints
+
+- `POST /fibonacci`
+  - **Body:** `{ "number": int }`
+  - **Response:** Fibonacci result
+
+- `POST /pow`
+  - **Body:** `{ "number": int, "exponent": int }`
+  - **Response:** Power result
+
+- `POST /factorial`
+  - **Body:** `{ "number": int }`
+  - **Response:** Factorial result
+
+- `GET /math/history?limit=10`
+  - **Response:** Recent request history
+
+> **Note:** For `/fibonacci` and `/factorial`, only the `number` field is required. The `exponent` field is only needed for `/pow`.
+
+## Monitoring
+
+Prometheus and Grafana are pre-configured via Docker Compose for metrics and dashboards.
+
