@@ -6,6 +6,7 @@ from starlette.responses import JSONResponse
 from model.math_request import MathRequest
 from service.service_audit import log_math_operation, get_recent_requests
 from service.service_math import fibonacci, pow_function, factorial
+from service.service_redis_publisher import publish_to_redis
 
 router = APIRouter()
 
@@ -13,7 +14,9 @@ router = APIRouter()
 @router.post("/fibonacci", response_model=int)
 async def calculate_fibonacci(math_request: MathRequest):
     nth_number = math_request.number
-    asyncio.create_task(log_math_operation("fibonacci", dict(math_request)))
+    math_request_dict = dict(math_request)
+    asyncio.create_task(log_math_operation("fibonacci", math_request_dict))
+    publish_to_redis("fibonacci", math_request_dict)
     return fibonacci(nth_number)
 
 
@@ -21,13 +24,17 @@ async def calculate_fibonacci(math_request: MathRequest):
 async def calculate_pow(math_request: MathRequest):
     if math_request.exponent is None:
         return JSONResponse(status_code=400, content={"error": "Exponent is required for pow"})
-    asyncio.create_task(log_math_operation("pow", dict(math_request)))
+    math_request_dict = dict(math_request)
+    asyncio.create_task(log_math_operation("pow", math_request_dict))
+    publish_to_redis("pow", math_request_dict)
     return pow_function(math_request.number, math_request.exponent)
 
 
 @router.post("/factorial", response_model=int)
 async def calculate_factorial(math_request: MathRequest):
-    asyncio.create_task(log_math_operation("factorial", dict(math_request)))
+    math_request_dict = dict(math_request)
+    asyncio.create_task(log_math_operation("factorial", math_request_dict))
+    publish_to_redis("factorial", math_request_dict)
     return factorial(math_request.number)
 
 

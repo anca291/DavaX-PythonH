@@ -7,7 +7,6 @@ from fastapi import HTTPException
 def fibonacci(n):
     a = 0
     b = 1
-    #print(f"Calculating fibonacci({n})")
     # Check if n is less than 0
     if n < 0:
         raise HTTPException(status_code=400, detail="Incorrect input")

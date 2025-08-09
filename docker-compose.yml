@@ -1,9 +1,15 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
 
   prometheus:
     image: prom/prometheus
+    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -13,6 +19,7 @@ services:
 
   grafana:
     image: grafana/grafana
+    container_name: grafana
     ports:
       - "3000:3000"
     networks:
@@ -38,19 +45,31 @@ services:
 #      retries: 5
 
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: math-api
     ports:
       - "8000:8000"
     depends_on:
+      - redis
       - mongo
     environment:
       - MONGO_URL=mongodb://admin:admin123@mongo:27017
     networks:
       - app-network
 
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: math_worker
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+
 networks:
   app-network:
     driver: bridge
-volumes:
-  mongo-data:
