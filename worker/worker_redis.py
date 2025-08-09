@@ -1,6 +1,11 @@
 from redis import Redis
 
-client = Redis(host='localhost', port=6379, decode_responses=True)
+import logging
+
+# Configure the logging
+logging.basicConfig(level=logging.INFO)
+
+client = Redis(host='redis', port=6379, decode_responses=True)
 
 
 def main():
@@ -25,10 +30,10 @@ def main():
         if response:
             stream, messages = response[0]
             message_id, message_data = messages[0]
-            print(f"Received message '{message_id}': {message_data}")
+            logging.info(f"Received message '{message_id}': {message_data}")
 
             client.xack(stream, group, message_id)
-            print(f"Message '{message_id}' acknowledged.")
+            logging.info(f"Message '{message_id}' acknowledged.")
 
 
 if __name__ == "__main__":
