@@ -1,6 +1,12 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
 
   prometheus:
     image: prom/prometheus
@@ -29,13 +35,13 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin123
     networks:
       - app-network
-#    volumes:
-#      - mongo-data:/data/db
-#    healthcheck:
-#      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api:
     build: .
@@ -44,6 +50,7 @@ services:
       - "8000:8000"
     depends_on:
       - mongo
+      - redis
     environment:
       - MONGO_URL=mongodb://admin:admin123@mongo:27017
     networks:
