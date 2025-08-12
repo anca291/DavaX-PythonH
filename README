@@ -1,6 +1,6 @@
 # Math API Microservice
 
-This project implements a production-ready microservice for mathematical operations using FastAPI, with request logging to MongoDB and monitoring via Prometheus and Grafana.
+This project implements a production-ready microservice for mathematical operations using FastAPI, with request logging to MongoDB, Redis-backed workers, and monitoring via Prometheus and Grafana.
 
 ## Solution Approach
 
@@ -16,6 +16,7 @@ This project implements a production-ready microservice for mathematical operati
 
 - Calculate Fibonacci, power, and factorial
 - Log all requests to MongoDB
+Background processing with Redis
 - Retrieve recent request history
 - Monitoring with Prometheus and Grafana
 
@@ -23,6 +24,12 @@ This project implements a production-ready microservice for mathematical operati
 
 - Python 3.10+
 - Docker & Docker Compose
+
+## Deployment & ## Testing
+Azure
+The API is deployed at:
+http://51.144.146.239:8000/docs  & http://52.137.51.232:8000/docs
+(Alternatively, use `curl` or Postman to send requests to the same base URL.)
 
 ## Setup
 
@@ -35,6 +42,7 @@ This project implements a production-ready microservice for mathematical operati
 2. Set up `.env`:
     ```
     MONGO_URI=mongodb://admin:admin123@localhost:27017/
+    REDIS_URL=redis://localhost:6379/0
     ```
 3. Run MongoDB locally or use Docker.
 
@@ -42,7 +50,10 @@ This project implements a production-ready microservice for mathematical operati
     ```bash
     uvicorn main:app --reload
     ```
-
+5. Start the worker (for background tasks):
+    ```
+    python worker_redis.py
+    ```
 ### Docker Compose
 
 1. Build and start all services:
@@ -55,6 +66,10 @@ This project implements a production-ready microservice for mathematical operati
     - Prometheus: [http://localhost:9090](http://localhost:9090)
     - Grafana: [http://localhost:3000](http://localhost:3000)
     - MongoDB: `localhost:27017`
+    - Redis: localhost:6379
+Redis
+    - Redis is used as a message broker for background task processing.
+    - Ensure Redis is running before starting the worker.
 
 ## API Endpoints
 
