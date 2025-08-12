@@ -12,7 +12,7 @@ def main():
     stream = "math_stream"
     group = "math_group"
     consumer = "math_consumer"
-
+    print("worker_redis.py started")
     try:
         client.xgroup_create(stream, group, id='0', mkstream=True)
     except:
