@@ -1,0 +1,9 @@
+from python:3.11-slim
+
+WORKDIR /app
+COPY worker/worker_redis.py .
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python","worker_redis.py"]
