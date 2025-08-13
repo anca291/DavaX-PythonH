@@ -1,6 +1,8 @@
 version: '3.8'
 
 services:
+
+
   redis:
     image: redis:7
     ports:
@@ -55,6 +57,18 @@ services:
       - MONGO_URL=mongodb://admin:admin123@mongo:27017
     networks:
       - app-network
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: math_worker
+    depends_on:
+      - redis
+      - mongo
+    networks:
+      - app-network
+
 
 networks:
   app-network:
